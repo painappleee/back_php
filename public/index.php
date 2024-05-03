@@ -1,5 +1,13 @@
 <?php
 require_once '../vendor/autoload.php';
+require_once "../controllers/MainController.php";
+require_once "../controllers/MayController.php";
+require_once "../controllers/MayImageConroller.php";
+require_once "../controllers/MayInfoController.php";
+require_once "../controllers/TotoroController.php";
+require_once "../controllers/TotoroImageController.php";
+require_once "../controllers/TotoroInfoController.php";
+require_once "../controllers/Controller404.php";
 
 $loader = new \Twig\Loader\FilesystemLoader('../views');
 
@@ -7,78 +15,29 @@ $twig = new \Twig\Environment($loader);
 
 $url = $_SERVER["REQUEST_URI"];
 
-$title = "";
-$template = "";
-
-$context = []; 
-$menu = [
-    [
-        "title" => "Главная",
-        "url" => "/",
-    ],
-    [
-        "title" => "Мэй",
-        "url" => "/may",
-    ],
-    [
-        "title" => "Тоторо",
-        "url" => "/totoro",
-    ]
-];
+$controller = new Controller404($twig);
 
 
 
 if ($url == "/") {
-    $template = "main.twig";
-    $title = "Главная";
-    $context['text']="Вы на главной лесной полянке. Выберите куда пойти!";
-    $context['image']= "/images/forest.gif";
-    $context['image_alt'] = "forest";
-
-} elseif (preg_match("#^/may#",$url)) {
-    $template = "_object.twig";
-    $title = "Мэй";
-
-    $context['image_url'] = "/may/image";
-    $context['info_url'] = "/may/info";
-    $context['text']="Вы попали в уютный деревенский домик. Поиграйте с малышкой Мэй!";
-
-    if (preg_match("#^/may/image#",$url)){
-
-        $template = "image.twig";
-        $context['image']= "/images/may.gif";
-        $context['is_image'] = true;
-        $context['image_alt'] = "may";
-
-    }
-    elseif(preg_match("#^/may/info#",$url)){
-        $template = "may_info.twig";
-        $context['is_info'] = true;
-    }
-
-} elseif (preg_match("#^/totoro#",$url)) {
-
-    $template = "_object.twig";
-    $title = "Тоторо";
-
-    $context['image_url'] = "/totoro/image";
-    $context['info_url'] = "/totoro/info";
-    $context['text']="Вы среди ветвей огромного камфорного дерева. Не разбудите Тоторо!";
-
-    if (preg_match("#^/totoro/image#",$url)){
-        $template = "image.twig";
-        $context['image']= "/images/totoro.gif";
-        $context['is_image'] = true;
-        $context['image_alt'] = "totoro";
-    }
-    elseif(preg_match("#^/totoro/info#",$url)){
-        $context['is_info'] = true;
-        $template = "totoro_info.twig";
-    }
+    $controller = new MainController($twig);
+}elseif (preg_match("#^/may/image#",$url)){
+    $controller = new MayImageController($twig); 
+}elseif(preg_match("#^/may/info#",$url)){
+    $controller = new MayInfoController($twig);
+}elseif (preg_match("#^/may#",$url)) {
+    $controller = new MayController($twig);    
+}
+elseif (preg_match("#^/totoro/image#",$url)){
+    $controller = new TotoroImageController($twig);
+}elseif(preg_match("#^/totoro/info#",$url)){
+    $controller = new TotoroInfoController($twig);
+}elseif (preg_match("#^/totoro#",$url)) {
+    $controller = new TotoroController($twig); 
 }
 
-$context['title'] = $title;
-$context['menu'] = $menu; 
-    
-echo $twig->render($template,$context);
+if ($controller) {
+    $controller->get();
+}
+
 ?>
