@@ -1,0 +1,22 @@
+{% extends "_layout.twig" %}
+
+{% block content %}
+    <br>
+    <h1>{{title}}</h1>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link {{ is_image ? 'active' }}" href={{image_url}}}>Картинка</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ is_info ? 'active' }}" href={{info_url}}>Описание</a>
+        </li>
+    </ul>
+    <hr>
+
+    {% block objectContent %}
+        <div>
+            <p>{{text}}</p>
+        </div>
+    {% endblock %}
+{% endblock %}
+
