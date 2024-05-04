@@ -1,12 +1,10 @@
 <?php
 require_once '../vendor/autoload.php';
+require_once '../framework/autoload.php';
 require_once "../controllers/MainController.php";
-require_once "../controllers/MayController.php";
-require_once "../controllers/MayImageConroller.php";
-require_once "../controllers/MayInfoController.php";
-require_once "../controllers/TotoroController.php";
-require_once "../controllers/TotoroImageController.php";
-require_once "../controllers/TotoroInfoController.php";
+require_once "../controllers/ObjectController.php";
+require_once "../controllers/ObjectImageController.php";
+require_once "../controllers/ObjectInfoController.php";
 require_once "../controllers/Controller404.php";
 
 $loader = new \Twig\Loader\FilesystemLoader('../views');
@@ -14,33 +12,17 @@ $loader = new \Twig\Loader\FilesystemLoader('../views');
 $twig = new \Twig\Environment($loader,["debug"=> true]);
 
 $twig->addExtension(new \Twig\Extension\DebugExtension());
-$url = $_SERVER["REQUEST_URI"];
-
-$controller = new Controller404($twig);
 
 $pdo = new PDO("mysql:host=localhost:3307;dbname=totorodb;charset=utf8", "root", "");
 
+$router = new Router($twig, $pdo);
+$router->add("/", MainController::class);
+$router->add("/totoro-object/(?<id>\d+)", ObjectController::class); 
+$router->add("/totoro-object/(?<id>\d+)/info", ObjectInfoController::class); 
+$router->add("/totoro-object/(?<id>\d+)/image", ObjectImageController::class); 
 
-if ($url == "/") {
-    $controller = new MainController($twig);
-}elseif (preg_match("#^/may/image#",$url)){
-    $controller = new MayImageController($twig); 
-}elseif(preg_match("#^/may/info#",$url)){
-    $controller = new MayInfoController($twig);
-}elseif (preg_match("#^/may#",$url)) {
-    $controller = new MayController($twig);    
-}
-elseif (preg_match("#^/totoro/image#",$url)){
-    $controller = new TotoroImageController($twig);
-}elseif(preg_match("#^/totoro/info#",$url)){
-    $controller = new TotoroInfoController($twig);
-}elseif (preg_match("#^/totoro#",$url)) {
-    $controller = new TotoroController($twig); 
-}
+$router->get_or_default(Controller404::class);
 
-if ($controller) {
-    $controller->setPDO($pdo);
-    $controller->get();
-}
+
 
 ?>

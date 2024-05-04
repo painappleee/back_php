@@ -6,14 +6,14 @@
       <img class="card-img-top" src="{{item.image}}" alt="{{item.title}}" style="width: 17.9rem; height: 11rem">
       <div class="card-body">
         <div class="row p-1">
-          {{ buttons.btn(item.title, "/", true) }}
+          {{ buttons.btn(item.title, "/totoro-object/#{item.id}", true) }}
         </div>
         <div class="row d-flex" style="justify-content:center;">          
           <div class="col-auto">
-            <a href="/">Картинка</a>
+            <a href="/totoro-object/{{item.id}}/image">Картинка</a>
           </div>
           <div class="col-auto">
-            <a href="/">Описание</a>
+            <a href="/totoro-object/{{item.id}}/info">Описание</a>
           </div>   
         </div>  
       </div>
