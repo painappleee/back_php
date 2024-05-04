@@ -11,12 +11,14 @@ require_once "../controllers/Controller404.php";
 
 $loader = new \Twig\Loader\FilesystemLoader('../views');
 
-$twig = new \Twig\Environment($loader);
+$twig = new \Twig\Environment($loader,["debug"=> true]);
 
+$twig->addExtension(new \Twig\Extension\DebugExtension());
 $url = $_SERVER["REQUEST_URI"];
 
 $controller = new Controller404($twig);
 
+$pdo = new PDO("mysql:host=localhost:3307;dbname=totorodb;charset=utf8", "root", "");
 
 
 if ($url == "/") {
@@ -37,6 +39,7 @@ elseif (preg_match("#^/totoro/image#",$url)){
 }
 
 if ($controller) {
+    $controller->setPDO($pdo);
     $controller->get();
 }
 

@@ -1,13 +1,26 @@
 {% import "buttons.html" as buttons %}
 
-<ul class="list-group">  
-    {% for item in menu %}
-      {% if (item.url!="/") %}
-      <li class="list-group-item">
-        {{ buttons.btn(item.title, item.url, true) }}
-        <a class="me-3" href="{{item.url}}/image">Картинка</a>
-        <a href="{{item.url}}/info">Описание</a>
-      </li>
-      {% endif %}
+<div class="row">
+    {% for item in totoro_objects %}    
+    <div class="card p-0 me-4 mb-4" style="width: 18rem; height: 17rem">
+      <img class="card-img-top" src="{{item.image}}" alt="{{item.title}}" style="width: 17.9rem; height: 11rem">
+      <div class="card-body">
+        <div class="row p-1">
+          {{ buttons.btn(item.title, "/", true) }}
+        </div>
+        <div class="row d-flex" style="justify-content:center;">          
+          <div class="col-auto">
+            <a href="/">Картинка</a>
+          </div>
+          <div class="col-auto">
+            <a href="/">Описание</a>
+          </div>   
+        </div>  
+      </div>
+    </div>
     {% endfor %}
-  </ul>
+
+    
+</div>
+
+  
