@@ -1,17 +1,19 @@
 <?php
-//require_once "TwigBaseController.php"; 
+require_once "BaseTotoroTwigController.php"; 
 
-class MainController extends TwigBaseController {
-    public $template = "main.twig";
-    public $title = "Главная";    
+class MainController extends BaseTotoroTwigController {  
+
+    public function getTemplate(): string
+    {
+        $template = "main.twig";
+        return $template;
+    }
 
     public function getContext() : array
     {
         $context = parent::getContext();
 
-        /*$context['text']="Вы на главной лесной полянке. Выберите куда пойти!";
-        $context['image']= "/images/forest.gif";
-        $context['image_alt'] = "forest";*/
+        $context['description']="Вы на главной лесной полянке. Выберите куда пойти!";
                 /*вы маленькая мяв  нет вы нет вы ^-^
 
                 вы более маленький но! 1ВЫ меньше
@@ -35,7 +37,16 @@ class MainController extends TwigBaseController {
                 
                 мяяяу*/
 
-        $query = $this->pdo->query("SELECT * FROM totoro_objects");
+
+        if (isset($_GET['type'])){
+            $query = $this->pdo->prepare("SELECT * FROM totoro_objects WHERE type=:type");
+            $query->bindValue("type", $_GET['type']);
+            $query->execute();
+            $context['title'] = $_GET['type'];
+        }else{
+            $query = $this->pdo->query("SELECT * FROM totoro_objects");
+            $context['title'] = "Главная";
+        }    
         
         $context['totoro_objects'] = $query->fetchAll();
 

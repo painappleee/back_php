@@ -12,6 +12,10 @@ abstract class BaseController {
         $this->pdo = $pdo;
     }
 
+    public function getTemplate(): string {
+        return "";
+    }
+
     public function getContext(): array {
         return [];
     }

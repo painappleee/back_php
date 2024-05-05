@@ -3,12 +3,9 @@
 {% block content %}
 
 <br>
+<p>{{description}}</p>
 
-{% include 'list_template.html' with {menu, totoro_objects} %}
-
+{% include 'list_template.html' with totoro_objects %}
 <br>
 
-<p>{{text}}</p>
-
-<img src="{{image}}" alt="{{image_alt}}" style="width: 500px;">
 {% endblock %}

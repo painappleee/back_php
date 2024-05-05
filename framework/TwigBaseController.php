@@ -13,27 +13,12 @@ class TwigBaseController extends BaseController {
     public function getContext() : array
     {
         $context = parent::getContext();
-        $context['title'] = $this->title; 
-        $context['menu'] = [
-            [
-                "title" => "Главная",
-                "url" => "/",
-            ],
-            [
-                "title" => "Мэй",
-                "url" => "/may",
-            ],
-            [
-                "title" => "Тоторо",
-                "url" => "/totoro",
-            ]
-        ];
-        
+        $context['title'] = $this->title;       
 
         return $context;
     }
 
     public function get() {
-        echo $this->twig->render($this->template, $this->getContext());
+        echo $this->twig->render($this->getTemplate(), $this->getContext());
     }
 }
