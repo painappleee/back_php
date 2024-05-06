@@ -1,3 +1,3 @@
 {% macro btn(title, url, is_style=true, my_style="primary") %}
-    <a class="btn btn-{{is_style==true ? my_style : 'link '}} me-3" href={{url}}>{{title}}</a>
+    <a style="font-size:large; text-decoration: none;" class="btn btn-{{is_style==true ? my_style : 'link '}} me-3" href={{url}}>{{title}}</a>
 {% endmacro %}

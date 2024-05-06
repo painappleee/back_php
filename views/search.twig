@@ -1,0 +1,39 @@
+{% extends "_layout.twig" %}
+{% import "buttons.html" as buttons %}
+
+{% block content %}
+    <br>
+    <h2>{{title}}</h2>
+    <form class="row g-3">
+        <div class="col-md-3">
+            <label for="inputState" class="form-label">Тип</label>
+            <select name="type"class="form-select">
+                <option selected value="">Все</option>
+                <option value="Люди">Люди</option>
+                <option value="Существа">Существа</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Имя</label>
+            <input type="text" class="form-control" name="title">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Описание</label>
+            <input type="text" class="form-control" name="info">
+        </div>
+        <div class="col-1">
+            <button type="submit" class="btn btn-primary" style="margin-top: 30px;">Найти</button>
+        </div>
+    </form>
+
+   
+    <br>
+
+    <ul class="list-group">
+    {% for obj in objects %}
+        <li class="list-group-item">
+            {{buttons.btn(obj.title, "/totoro-object/#{obj.id}", false)}}
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
