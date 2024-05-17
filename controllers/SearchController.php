@@ -2,12 +2,8 @@
 require_once "BaseTotoroTwigController.php";
 
 class SearchController extends BaseTotoroTwigController{
-    public function getTemplate(): string
-    {
-        $template = "search.twig";
+    public $template = "search.twig";
 
-        return $template;
-    }
 
     public function getContext(): array
     {
@@ -22,7 +18,7 @@ class SearchController extends BaseTotoroTwigController{
 SELECT id, title, info
 FROM totoro_objects
 WHERE (:title = '' OR title like CONCAT('%', :title, '%'))
-    AND (:type = '' OR type=:type) 
+    AND (:type = 'все' OR type=:type) 
         AND (:info = '' OR info like CONCAT('%', :info, '%'))
 EOL;
 

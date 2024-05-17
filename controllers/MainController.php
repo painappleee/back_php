@@ -3,11 +3,8 @@ require_once "BaseTotoroTwigController.php";
 
 class MainController extends BaseTotoroTwigController {  
 
-    public function getTemplate(): string
-    {
-        $template = "main.twig";
-        return $template;
-    }
+    public $title;
+    public $template = "main.twig";
 
     public function getContext() : array
     {
@@ -42,14 +39,19 @@ class MainController extends BaseTotoroTwigController {
             $query = $this->pdo->prepare("SELECT * FROM totoro_objects WHERE type=:type");
             $query->bindValue("type", $_GET['type']);
             $query->execute();
-            $context['title'] = $_GET['type'];
+            for ($i=0; $i<count($context['types']);++$i){
+                if ($context['types'][$i]['id'] == $_GET['type']){
+                    $context['title'] = $context['types'][$i]['type'];
+                    break;
+                }
+            }
+            
         }else{
             $query = $this->pdo->query("SELECT * FROM totoro_objects");
             $context['title'] = "Главная";
         }    
         
         $context['totoro_objects'] = $query->fetchAll();
-
 
         return $context;
     }

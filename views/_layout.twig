@@ -24,11 +24,17 @@
                 </li>
                 {% for type in types %}
                     <li class="nav-item">
-                        <a class="nav-link {{title== type.type ? 'active'}}" href="/?type={{type.type}}">{{type.type}}</a>
+                        <a class="nav-link {{title== type.type ? 'active'}}" href="/?type={{type.id}}">{{type.type}}</a>
                     </li>
                 {% endfor %}
                 <li class="nav-item">
                     <a href="/search" class="nav-link {{title=='Поиск' ? 'active'}}">Поиск</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/createCharacter" class="nav-link {{title=='Добавление персонажа' ? 'active'}}">Добавление персонажа</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/createType" class="nav-link {{title=='Добавление типа' ? 'active'}}">Добавление типа</a>
                 </li>
             </ul>
             </div>

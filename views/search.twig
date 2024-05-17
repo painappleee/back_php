@@ -8,9 +8,10 @@
         <div class="col-md-3">
             <label for="inputState" class="form-label">Тип</label>
             <select name="type"class="form-select">
-                <option selected value="">Все</option>
-                <option value="Люди">Люди</option>
-                <option value="Существа">Существа</option>
+                <option value="все">Все</option>
+                {% for type in types %}
+                    <option value="{{type.id}}">{{type.type}}</option>                    
+                {% endfor %}
             </select>
         </div>
         <div class="col-md-4">

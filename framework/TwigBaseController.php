@@ -6,6 +6,10 @@ class TwigBaseController extends BaseController {
     public $template = "";     
     protected \Twig\Environment $twig; 
     
+    public function getTemplate(): string
+    {
+        return $this->template;
+    }
     public function setTwig($twig) {
         $this->twig = $twig;
     }
@@ -18,7 +22,7 @@ class TwigBaseController extends BaseController {
         return $context;
     }
 
-    public function get() {
-        echo $this->twig->render($this->getTemplate(), $this->getContext());
+    public function get(array $context) {
+        echo $this->twig->render($this->getTemplate(), $context);
     }
 }
