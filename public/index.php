@@ -7,7 +7,8 @@ require_once "../controllers/Controller404.php";
 require_once "../controllers/SearchController.php";
 require_once "../controllers/TotoroObjectCreateController.php";
 require_once "../controllers/TotoroTypeCreateController.php";
-
+require_once "../controllers/TotoroObjectDeleteController.php";
+require_once "../controllers/TotoroObjectUpdateController.php";
 
 $loader = new \Twig\Loader\FilesystemLoader('../views');
 
@@ -23,6 +24,8 @@ $router->add("/totoro-object/(?<id>\d+)", ObjectController::class);
 $router->add("/search", SearchController::class);
 $router->add("/createCharacter", TotoroObjectCreateController::class);
 $router->add("/createType", TotoroTypeCreateController::class);
+$router->add("/totoro-object/(?P<id>\d+)/delete", TotoroObjectDeleteController::class);
+$router->add("/totoro-object/(?P<id>\d+)/edit", TotoroObjectUpdateController::class);
 
 $router->get_or_default(Controller404::class);
 
