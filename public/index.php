@@ -1,6 +1,7 @@
 <?php
 require_once '../vendor/autoload.php';
 require_once '../framework/autoload.php';
+require_once '../middlewares/LoginRequiredMiddleware.php';
 require_once "../controllers/MainController.php";
 require_once "../controllers/ObjectController.php";
 require_once "../controllers/Controller404.php";
@@ -22,10 +23,14 @@ $router = new Router($twig, $pdo);
 $router->add("/", MainController::class);
 $router->add("/totoro-object/(?<id>\d+)", ObjectController::class);  
 $router->add("/search", SearchController::class);
-$router->add("/createCharacter", TotoroObjectCreateController::class);
-$router->add("/createType", TotoroTypeCreateController::class);
-$router->add("/totoro-object/(?P<id>\d+)/delete", TotoroObjectDeleteController::class);
-$router->add("/totoro-object/(?P<id>\d+)/edit", TotoroObjectUpdateController::class);
+$router->add("/createCharacter", TotoroObjectCreateController::class) 
+        ->middleware(new LoginRequiredMiddleware());
+$router->add("/createType", TotoroTypeCreateController::class)
+        ->middleware(new LoginRequiredMiddleware());
+$router->add("/totoro-object/(?P<id>\d+)/delete", TotoroObjectDeleteController::class)
+        ->middleware(new LoginRequiredMiddleware());
+$router->add("/totoro-object/(?P<id>\d+)/edit", TotoroObjectUpdateController::class)
+        ->middleware(new LoginRequiredMiddleware());
 
 $router->get_or_default(Controller404::class);
 

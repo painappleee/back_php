@@ -31,6 +31,8 @@ class ObjectController extends BaseTotoroTwigController {
         $context['image_url'] = "/totoro-object/".$data['id']."?show=image";
         $context['info_url'] = "/totoro-object/".$data['id']."?show=info";
         
+       
+
         if (isset($_GET['show'])){
             if ($_GET['show']=='info'){        
                 $context['is_info'] = true;
